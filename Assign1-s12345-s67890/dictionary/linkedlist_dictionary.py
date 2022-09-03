@@ -22,16 +22,15 @@ class ListNode:
 class LinkedListDictionary(BaseDictionary):
 
     def __init__(self):
-        # TO BE IMPLEMENTED
-        pass
-
+        self.head = ListNode()
 
     def build_dictionary(self, words_frequencies: [WordFrequency]):
         """
         construct the data structure to store nodes
         @param words_frequencies: list of (word, frequency) to be stored
         """
-        # TO BE IMPLEMENTED
+        for each in words_frequencies :
+            self.add_word_frequency(ListNode(each))
 
 
     def search(self, word: str) -> int:
@@ -50,9 +49,15 @@ class LinkedListDictionary(BaseDictionary):
         @param word_frequency: (word, frequency) to be added
         :return: True whether succeeded, False when word is already in the dictionary
         """
+        word, word_frq = word_frequency.word, word_frequency.frequency
+        data = (word, word_frq)
+        new_node=ListNode(data)
+        cur = self.head
+        while cur.next != None :
+            cur = cur.next
+        cur.next = new_node
+        return True
 
-        # TO BE IMPLEMENTED
-        return False
 
     def delete_word(self, word: str) -> bool:
         """
@@ -74,6 +79,14 @@ class LinkedListDictionary(BaseDictionary):
 
         # TO BE IMPLEMENTED
         return []
+
+    def length(self):
+        cur = self.head
+        total=0
+        while cur.next!=None:
+            total+=1
+            cur=cur.next
+            return total 
 
 
 
