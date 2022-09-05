@@ -13,25 +13,25 @@ from dictionary.word_frequency import WordFrequency
 # Class representing a node in the Trie
 class TrieNode:
 
-    def __init__(self, letter=None, frequency=None, is_last=False):
-        self.letter = letter            # letter stored at this node
-        self.frequency = frequency      # frequency of the word if this letter is the end of a word
-        self.is_last = is_last          # True if this letter is the end of a word
-        self.children: dict[str, TrieNode] = {}     # a hashtable containing children nodes, key = letter, value = child node
+    def __init__(self, char):
+        self.letter = char            # letter stored at this node
+        self.frequency = 0      # frequency of the word if this letter is the end of a word
+        self.is_last = False          # True if this letter is the end of a word
+        self.children = {}     # a hashtable containing children nodes, key = letter, value = child node
 
 
 class TrieDictionary(BaseDictionary):
 
     def __init__(self):
-        # TO BE IMPLEMENTED
-        pass
+        self.root = TrieNode("")
 
     def build_dictionary(self, words_frequencies: [WordFrequency]):
         """
         construct the data structure to store nodes
         @param words_frequencies: list of (word, frequency) to be stored
         """
-        # TO BE IMPLEMENTED
+        for word in words_frequencies:
+            self.add_word_frequency(word)
 
 
     def search(self, word: str) -> int:
@@ -51,10 +51,17 @@ class TrieDictionary(BaseDictionary):
         @param word_frequency: (word, frequency) to be added
         :return: True whether succeeded, False when word is already in the dictionary
         """
-
-        # TO BE IMPLEMENTED
-
-        return False
+        node = self.root
+        for char in word_frequency.word :
+            if char in node.children:
+                node = node.children[char]
+            else:
+                new_node = TrieNode(char)
+                node.children[char] = new_node
+                node = new_node
+        node.is_last = True
+        node.frequency += 1
+        return True
 
     def delete_word(self, word: str) -> bool:
         """
