@@ -22,15 +22,19 @@ class ListNode:
 class LinkedListDictionary(BaseDictionary):
 
     def __init__(self):
-        self.head = ListNode()
+        # TO BE IMPLEMENTED
+        # pass
+        self.head = None
+
 
     def build_dictionary(self, words_frequencies: [WordFrequency]):
         """
         construct the data structure to store nodes
         @param words_frequencies: list of (word, frequency) to be stored
         """
-        for each in words_frequencies :
-            self.add_word_frequency(ListNode(each))
+        # TO BE IMPLEMENTED
+        for word in words_frequencies:
+            self.add_word_frequency(word)
 
 
     def search(self, word: str) -> int:
@@ -41,7 +45,16 @@ class LinkedListDictionary(BaseDictionary):
         """
 
         # TO BE IMPLEMENTED
+
+        item = self.head
+        while item is not None:
+            if item.word_frequency[0] == word:
+                return item.word_frequency[1]
+            item = item.next
         return 0
+            
+
+
 
     def add_word_frequency(self, word_frequency: WordFrequency) -> bool:
         """
@@ -49,14 +62,27 @@ class LinkedListDictionary(BaseDictionary):
         @param word_frequency: (word, frequency) to be added
         :return: True whether succeeded, False when word is already in the dictionary
         """
-        word, word_frq = word_frequency.word, word_frequency.frequency
-        data = (word, word_frq)
-        new_node=ListNode(data)
-        cur = self.head
-        while cur.next != None :
-            cur = cur.next
-        cur.next = new_node
+
+        # TO BE IMPLEMENTED
+        word_frq_tuple = (word_frequency.word, word_frequency.frequency)
+
+        if self.head is None:
+            self.head = ListNode(word_frq_tuple)
+            return True
+
+        ll_item = self.head   
+        while True:
+            # if word is in LL, we return False
+            if ll_item.word_frequency[0] == word_frequency.word:
+                return False
+                
+            if ll_item.next is None:
+                break
+            ll_item = ll_item.next
+
+        ll_item.next = ListNode(word_frq_tuple)
         return True
+
 
 
     def delete_word(self, word: str) -> bool:
@@ -67,10 +93,36 @@ class LinkedListDictionary(BaseDictionary):
         """
 
         # TO BE IMPLEMENTED
-        return False
+
+        # Store head node
+        temp = self.head
+ 
+        # If head node itself holds the key to be deleted
+        if temp is not None:
+            if temp.word_frequency[0] == word:
+                self.head = temp.next
+                temp = None
+                return True
+ 
+        # Search for the key to be deleted, keep track of the
+        # previous node as we need to change 'prev.next'
+        while temp is not None:
+            if temp.word_frequency[0] == word:
+                break
+            prev = temp
+            temp = temp.next
+ 
+        # if key was not present in linked list
+        if temp == None:
+            return False
+ 
+        # Unlink the node from linked list
+        prev.next = temp.next
+        temp = None
+        return True
 
 
-    def autocomplete(self, word: str) -> [WordFrequency]:
+    def autocomplete(self, prefix_word: str) -> [WordFrequency]:
         """
         return a list of 3 most-frequent words in the dictionary that have 'word' as a prefix
         @param word: word to be autocompleted
@@ -78,15 +130,29 @@ class LinkedListDictionary(BaseDictionary):
         """
 
         # TO BE IMPLEMENTED
-        return []
 
-    def length(self):
-        cur = self.head
-        total=0
-        while cur.next!=None:
-            total+=1
-            cur=cur.next
-            return total 
+        prefix_word_length = len(prefix_word)
+        most_frq_words = []
+        ll_item = self.head
+        while ll_item is not None:
+            word, word_frq = ll_item.word_frequency[0], ll_item.word_frequency[1]
+            if word[0:prefix_word_length] == prefix_word:
+                most_frq_words.append((word, word_frq))
+                # sorting most_frq_words list using the frq of each word in reverse order
+                most_frq_words.sort(key=lambda word_frq_tuple: word_frq_tuple[1], reverse=True)
+
+            ll_item = ll_item.next
+
+
+        most_frq_words = most_frq_words[:3]
+
+        return_lst = []
+        for word, word_frq in most_frq_words:
+            return_lst.append(WordFrequency(word, word_frq))
+
+        return return_lst
+
+
 
 
 
