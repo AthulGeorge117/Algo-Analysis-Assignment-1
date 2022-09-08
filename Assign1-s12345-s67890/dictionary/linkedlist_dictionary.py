@@ -45,7 +45,6 @@ class LinkedListDictionary(BaseDictionary):
         """
 
         # TO BE IMPLEMENTED
-
         item = self.head
         while item is not None:
             if item.word_frequency[0] == word:
@@ -65,21 +64,16 @@ class LinkedListDictionary(BaseDictionary):
 
         # TO BE IMPLEMENTED
         word_frq_tuple = (word_frequency.word, word_frequency.frequency)
-
         if self.head is None:
             self.head = ListNode(word_frq_tuple)
             return True
-
         ll_item = self.head   
         while True:
-            # if word is in LL, we return False
             if ll_item.word_frequency[0] == word_frequency.word:
                 return False
-                
             if ll_item.next is None:
                 break
             ll_item = ll_item.next
-
         ll_item.next = ListNode(word_frq_tuple)
         return True
 
@@ -91,32 +85,19 @@ class LinkedListDictionary(BaseDictionary):
         @param word: word to be deleted
         @return: whether succeeded, e.g. return False when point not found
         """
-
-        # TO BE IMPLEMENTED
-
-        # Store head node
         temp = self.head
- 
-        # If head node itself holds the key to be deleted
         if temp is not None:
             if temp.word_frequency[0] == word:
                 self.head = temp.next
                 temp = None
                 return True
- 
-        # Search for the key to be deleted, keep track of the
-        # previous node as we need to change 'prev.next'
         while temp is not None:
             if temp.word_frequency[0] == word:
                 break
             prev = temp
             temp = temp.next
- 
-        # if key was not present in linked list
         if temp == None:
             return False
- 
-        # Unlink the node from linked list
         prev.next = temp.next
         temp = None
         return True
@@ -128,9 +109,6 @@ class LinkedListDictionary(BaseDictionary):
         @param word: word to be autocompleted
         @return: a list (could be empty) of (at most) 3 most-frequent words with prefix 'word'
         """
-
-        # TO BE IMPLEMENTED
-
         prefix_word_length = len(prefix_word)
         most_frq_words = []
         ll_item = self.head
@@ -138,18 +116,12 @@ class LinkedListDictionary(BaseDictionary):
             word, word_frq = ll_item.word_frequency[0], ll_item.word_frequency[1]
             if word[0:prefix_word_length] == prefix_word:
                 most_frq_words.append((word, word_frq))
-                # sorting most_frq_words list using the frq of each word in reverse order
                 most_frq_words.sort(key=lambda word_frq_tuple: word_frq_tuple[1], reverse=True)
-
             ll_item = ll_item.next
-
-
         most_frq_words = most_frq_words[:3]
-
         return_lst = []
         for word, word_frq in most_frq_words:
             return_lst.append(WordFrequency(word, word_frq))
-
         return return_lst
 
 

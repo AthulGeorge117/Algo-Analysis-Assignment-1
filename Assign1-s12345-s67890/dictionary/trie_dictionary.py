@@ -88,24 +88,20 @@ class TrieDictionary(BaseDictionary):
         @param word: word to be deleted
         @return: whether succeeded, e.g. return False when point not found
         """
-        
         node = self.root
-
         for char in word:
             if char in node.children:
                 node = node.children[char]
             else:
                 return False
-
         if node.is_last == False:
             return False
-
         node.is_last = False
         node.frequency = None
         return True
 
 
-    def dfs(self, node, prefix):
+    def traverse(self , node , prefix) :
         """Depth-first traversal of the trie
         
         Args:
@@ -114,10 +110,9 @@ class TrieDictionary(BaseDictionary):
                 word while traversing the trie
         """
         if node.is_last:
-            self.wordlist.append(WordFrequency(prefix + node.letter, node.frequency))
-        
-        for child in node.children.values():
-            self.dfs(child, prefix + node.letter)
+            self.wordslist.append(WordFrequency(prefix + node.letter , node.frequency))
+        for each in node.children.values() :
+            self.traverse(each , prefix + node.letter)
 
 
 
@@ -127,19 +122,13 @@ class TrieDictionary(BaseDictionary):
         @param word: word to be autocompleted
         @return: a list (could be empty) of (at most) 3 most-frequent words with prefix 'word'
         """
-
         node = self.root
-        # Check if the prefix is in the trie
+        self.wordslist = []
         for char in prefix_word:
             if char in node.children:
                 node = node.children[char]
             else:
-                # cannot found the prefix, return empty list
                 return []
-        
-        # Traverse the trie to get all candidates
-        self.wordlist = []
-        self.dfs(node, prefix_word[:-1])
-        self.wordlist.sort(reverse=True, key=lambda y: y.frequency)
-        # Sort the results in reverse order and return
-        return self.wordlist[:3]
+        self.traverse(node, prefix_word[:-1])
+        self.wordslist.sort(reverse=True, key=lambda y: y.frequency)
+        return self.wordslist[:3]
