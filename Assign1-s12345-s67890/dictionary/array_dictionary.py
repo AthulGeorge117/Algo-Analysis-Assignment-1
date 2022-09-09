@@ -85,7 +85,7 @@ class ArrayDictionary(BaseDictionary):
         """        
         most_frq_words = []
         for word, word_frq in self.array:
-            if word[0:len(prefix_word)] == prefix_word:
+            if word.startswith(prefix_word):
                 most_frq_words.append((word, word_frq))
                 most_frq_words.sort(key=lambda word_frq_tuple: word_frq_tuple[1], reverse=True)
         most_frq_words = most_frq_words[:3]

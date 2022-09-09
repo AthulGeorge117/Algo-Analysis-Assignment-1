@@ -114,7 +114,7 @@ class LinkedListDictionary(BaseDictionary):
         ll_item = self.head
         while ll_item is not None:
             word, word_frq = ll_item.word_frequency[0], ll_item.word_frequency[1]
-            if word[0:prefix_word_length] == prefix_word:
+            if word.startswith(prefix_word):
                 most_frq_words.append((word, word_frq))
                 most_frq_words.sort(key=lambda word_frq_tuple: word_frq_tuple[1], reverse=True)
             ll_item = ll_item.next
