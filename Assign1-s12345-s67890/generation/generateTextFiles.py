@@ -1,6 +1,3 @@
-import random
-import os
-
 def createFile(dataFile, size, file):
     dList = [] 
     with open(dataFile , "r") as df:
