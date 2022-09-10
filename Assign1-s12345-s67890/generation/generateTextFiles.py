@@ -13,6 +13,6 @@ def createFile(dataFile, size, file):
         file.write(output)
     
 if __name__ == '__main__':
-    sizes = [10, 50, 100, 1000, 5000, 10000, 50000, 100000, 200000]
+    sizes = [10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 200000]
     for each in sizes:
         createFile('sampleData200k.txt', each , file = "testData" + str(f"{each}words"))
