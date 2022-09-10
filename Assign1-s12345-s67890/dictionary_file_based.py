@@ -29,9 +29,8 @@ def usage():
     sys.exit(1)
 
 
-if __name__ == '__main__':
-    # Fetch the command line arguments
-    start_time = time.time()
+def main():
+     # Fetch the command line arguments
     args = sys.argv
 
     if len(args) != 5:
@@ -122,4 +121,6 @@ if __name__ == '__main__':
     except FileNotFoundError as e:
         print("Command file doesn't exist.")
         usage()
-    print("--- %s seconds ---" % (time.time() - start_time))
+
+if __name__ == '__main__':
+   main()
