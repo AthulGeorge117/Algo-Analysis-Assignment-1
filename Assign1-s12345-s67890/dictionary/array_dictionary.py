@@ -49,17 +49,15 @@ class ArrayDictionary(BaseDictionary):
         """
         # TO BE IMPLEMENTED
         word_frq_tuple = (word_frequency.word, word_frequency.frequency)
-        if len(self.array) == 0:
-            self.array.append(word_frq_tuple)
-            return True
-        else:
-            for index in range(len(self.array)):
-                # if word is in array
-                if self.array[index][0] == word_frequency.word:
-                    return False
-                else:
-                    self.array.append(word_frq_tuple)
-                    return True
+
+        for index in range(len(self.array)):
+            # if word is in array
+            if self.array[index][0] == word_frequency.word:
+                return False
+                    
+        self.array.append(word_frq_tuple)
+        return True
+                    
 
 
     def delete_word(self, word: str) -> bool:
@@ -75,7 +73,7 @@ class ArrayDictionary(BaseDictionary):
                 self.array.pop(index)
                 return True
         return False
-
+        
 
     def autocomplete(self, prefix_word: str) -> [WordFrequency]:
         """

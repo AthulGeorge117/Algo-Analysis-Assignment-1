@@ -4,7 +4,6 @@ from dictionary.base_dictionary import BaseDictionary
 from dictionary.array_dictionary import ArrayDictionary
 from dictionary.linkedlist_dictionary import LinkedListDictionary
 from dictionary.trie_dictionary import TrieDictionary
-import time
 
 
 # -------------------------------------------------------------------
@@ -29,8 +28,8 @@ def usage():
     sys.exit(1)
 
 
-def main():
-     # Fetch the command line arguments
+if __name__ == '__main__':
+    # Fetch the command line arguments
     args = sys.argv
 
     if len(args) != 5:
@@ -121,6 +120,3 @@ def main():
     except FileNotFoundError as e:
         print("Command file doesn't exist.")
         usage()
-
-if __name__ == '__main__':
-   main()
